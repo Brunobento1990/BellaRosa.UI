@@ -1,21 +1,26 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect , useState } from 'react';
 import { useRouter } from 'next/navigation';
 import PropTypes from 'prop-types';
+import { useAuthApp } from '../../guards/auth-app'
 import { Box, Divider, MenuItem, MenuList, Popover, Typography } from '@mui/material';
-import { useAuth } from 'src/hooks/use-auth';
 
 export const AccountPopover = (props) => {
   const { anchorEl, onClose, open } = props;
   const router = useRouter();
-  const auth = useAuth();
+  const authApp = useAuthApp();
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    setUser(authApp.getSessionInfo())
+  },[])
 
   const handleSignOut = useCallback(
     () => {
       onClose?.();
-      auth.signOut();
+      authApp.clearLocalStorage();
       router.push('/auth/login');
     },
-    [onClose, auth, router]
+    [onClose, router]
   );
 
   return (
@@ -36,13 +41,13 @@ export const AccountPopover = (props) => {
         }}
       >
         <Typography variant="overline">
-          Account
+          Conta
         </Typography>
         <Typography
           color="text.secondary"
           variant="body2"
         >
-          Anika Visser
+          {user.nome}
         </Typography>
       </Box>
       <Divider />
@@ -57,7 +62,7 @@ export const AccountPopover = (props) => {
         }}
       >
         <MenuItem onClick={handleSignOut}>
-          Sign out
+          Sair
         </MenuItem>
       </MenuList>
     </Popover>

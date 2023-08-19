@@ -4,9 +4,9 @@ import { useRouter } from 'next/navigation';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Box, Button, Link, Stack, TextField, Typography } from '@mui/material';
-import { useAuth } from 'src/hooks/use-auth';
 import { Layout as AuthLayout } from 'src/layouts/auth/layout';
 import { useApi } from 'src/hooks/use-api';
+import { themeCores } from '../../theme/colors'
 
 const Page = () => {
   const router = useRouter();
@@ -16,31 +16,31 @@ const Page = () => {
       email: '',
       nome: '',
       password: '',
+      rePassword:'',
       submit: null
     },
     validationSchema: Yup.object({
       email: Yup
         .string()
-        .email('Must be a valid email')
+        .email('E-mail inválido')
         .max(255)
-        .required('Email is required'),
+        .required('E-mail é obrigatório'),
       nome: Yup
         .string()
         .max(255)
-        .required('Name is required'),
+        .required('Nome é obrigatório'),
       password: Yup
         .string()
-        .max(255)
-        .required('Password is required'),
+        .max(20)
+        .required('Senha é obrigatório'),
       rePassword: Yup
         .string()
-        .max(255)
-        .required('Password is required')
+        .max(20)
+        .required('Confirme sua senha')
     }),
     onSubmit: async (values, helpers) => {
       try {
         await api.createUser(values)
-        router.push('/');
       } catch (err) {
         helpers.setStatus({ success: false });
         helpers.setErrors({ submit: err.message });
@@ -76,22 +76,30 @@ const Page = () => {
               spacing={1}
               sx={{ mb: 3 }}
             >
-              <Typography variant="h4">
-                Register
+              <Typography 
+                variant="h4"
+                sx={{
+                  color:themeCores.rosa
+                }}
+              >
+                Cadastrar
               </Typography>
               <Typography
                 color="text.secondary"
                 variant="body2"
               >
-                Already have an account?
+                Já tem uma conta?
                 &nbsp;
                 <Link
                   component={NextLink}
                   href="/auth/login"
                   underline="hover"
                   variant="subtitle2"
+                  sx={{
+                    color:themeCores.rosa
+                  }}
                 >
-                  Log in
+                  Login
                 </Link>
               </Typography>
             </Stack>
@@ -104,7 +112,7 @@ const Page = () => {
                   error={!!(formik.touched.nome && formik.errors.nome)}
                   fullWidth
                   helperText={formik.touched.nome && formik.errors.nome}
-                  label="Name"
+                  label="Nome"
                   name="nome"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
@@ -114,7 +122,7 @@ const Page = () => {
                   error={!!(formik.touched.email && formik.errors.email)}
                   fullWidth
                   helperText={formik.touched.email && formik.errors.email}
-                  label="Email Address"
+                  label="E-mail"
                   name="email"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
@@ -125,7 +133,7 @@ const Page = () => {
                   error={!!(formik.touched.password && formik.errors.password)}
                   fullWidth
                   helperText={formik.touched.password && formik.errors.password}
-                  label="Password"
+                  label="Senha"
                   name="password"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
@@ -136,7 +144,7 @@ const Page = () => {
                   error={!!(formik.touched.rePassword && formik.errors.rePassword)}
                   fullWidth
                   helperText={formik.touched.rePassword && formik.errors.rePassword}
-                  label="Conirmar senha"
+                  label="Confirmar senha"
                   name="rePassword"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}

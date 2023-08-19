@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useLoader } from '../components/loading/index'
 import { useRouter } from 'next/navigation';
+import { useAuthApp } from "src/guards/auth-app";
 
 function getSocket() {
     //const baseUrl = "https://localhost:44345/api/"
@@ -20,17 +21,15 @@ export function useApi() {
 
     const loader = useLoader();
     const router = useRouter();
+    const authApp = useAuthApp();
 
     async function login(payload) {
-
         try {
-
             loader.show();
 
             const api = getSocket();
             const response = (await api.post("login-cliente", payload)).data;
-            //sessionInfo.setSessionInfo(response);
-            router.push('/');
+            authApp.setSessionInfo(response);
 
         } catch (error) {
             if (error.response) {
@@ -45,20 +44,19 @@ export function useApi() {
 
     async function createUser(payload) {
         try {
-
             loader.show();
-
             const api = getSocket();
             const response = (await api.post("adicionar-cliente", payload)).data;
-            //sessionInfo.setSessionInfo(response);
-            navigate('/home')
+            authApp.setSessionInfo(response);
 
         } catch (error) {
             if (error.response) {
-                //Modal.show(error.response.data)
-                alert(error.response)
+                if(error.response.data.errors.RePassword[0]){
+                    alert(error.response.data.errors.RePassword[0])
+                }else{
+                    alert("Ocorreu um erro interno, tente novamente mais tarde.")
+                }
             } else {
-                //Modal.show("Ocorreu um erro interno, tente novamente mais tarde.")
                 alert("Ocorreu um erro interno, tente novamente mais tarde.")
             }
         } finally {
@@ -68,6 +66,15 @@ export function useApi() {
 
     async function get(url) {
         try {
+
+            if (!authApp.authorize()) {
+                router
+                    .replace({
+                        pathname: '/auth/login',
+                        query: router.asPath !== '/' ? { continueUrl: router.asPath } : undefined
+                    })
+                    .catch(console.error);
+            }
 
             loader.show();
 

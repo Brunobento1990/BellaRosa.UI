@@ -24,6 +24,10 @@ export const neutral = {
   900: '#111927'
 };
 
+export const themeCores = {
+  rosa:'rgb(241, 99, 210)'
+}
+
 export const indigo = withAlphas({
   lightest: '#F5F7FF',
   light: '#EBEEFE',

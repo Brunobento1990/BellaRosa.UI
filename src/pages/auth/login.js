@@ -3,6 +3,7 @@ import Head from 'next/head';
 import NextLink from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useFormik } from 'formik';
+import { themeCores } from '../../theme/colors'
 import * as Yup from 'yup';
 import {
   Box,
@@ -39,7 +40,7 @@ const Page = () => {
     onSubmit: async (values, helpers) => {
       try {
         api.login(values)
-        
+
       } catch (err) {
         helpers.setStatus({ success: false });
         helpers.setErrors({ submit: err.message });
@@ -68,7 +69,8 @@ const Page = () => {
           flex: '1 1 auto',
           alignItems: 'center',
           display: 'flex',
-          justifyContent: 'center'
+          justifyContent: 'center',
+          marginTop: 10,
         }}
       >
         <Box
@@ -83,11 +85,11 @@ const Page = () => {
               spacing={1}
               sx={{ mb: 3 }}
             >
-              <Typography 
+              <Typography
                 variant="h4"
                 sx={{
-                  color:'rgb(241, 99, 210)'
-                }}  
+                  color: themeCores.rosa
+                }}
               >
                 Login
               </Typography>
@@ -103,8 +105,8 @@ const Page = () => {
                   underline="hover"
                   variant="subtitle2"
                   sx={{
-                    color:'rgb(241, 99, 210)'
-                  }}  
+                    color: themeCores.rosa
+                  }}
                 >
                   Cadastre - se
                 </Link>
@@ -153,7 +155,7 @@ const Page = () => {
                 sx={{ mt: 3 }}
                 type="submit"
                 variant="contained"
-                style={{ backgroundColor: 'rgb(241, 99, 210)' }}
+                style={{ backgroundColor: themeCores.rosa }}
               >
                 Continue
               </Button>
@@ -162,7 +164,7 @@ const Page = () => {
                 size="large"
                 sx={{ mt: 3 }}
                 onClick={handleSkip}
-                
+
               >
                 Esqueceu sua senha?
               </Button>

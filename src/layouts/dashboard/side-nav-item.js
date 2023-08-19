@@ -1,6 +1,7 @@
 import NextLink from 'next/link';
 import PropTypes from 'prop-types';
 import { Box, ButtonBase } from '@mui/material';
+import { themeCores } from '../../theme/colors'
 
 export const SideNavItem = (props) => {
   const { active = false, disabled, external, icon, path, title } = props;
@@ -50,7 +51,7 @@ export const SideNavItem = (props) => {
               justifyContent: 'center',
               mr: 2,
               ...(active && {
-                color: 'primary.main'
+                color: themeCores.rosa
               })
             }}
           >
@@ -68,7 +69,7 @@ export const SideNavItem = (props) => {
             lineHeight: '24px',
             whiteSpace: 'nowrap',
             ...(active && {
-              color: 'common.white'
+              color: themeCores.rosa
             }),
             ...(disabled && {
               color: 'neutral.500'

@@ -4,13 +4,13 @@ import LockClosedIcon from '@heroicons/react/24/solid/LockClosedIcon';
 import ShoppingBagIcon from '@heroicons/react/24/solid/ShoppingBagIcon';
 import UserIcon from '@heroicons/react/24/solid/UserIcon';
 import UserPlusIcon from '@heroicons/react/24/solid/UserPlusIcon';
-import UsersIcon from '@heroicons/react/24/solid/UsersIcon';
 import XCircleIcon from '@heroicons/react/24/solid/XCircleIcon';
 import { SvgIcon } from '@mui/material';
+import CategoryIcon from '@mui/icons-material/Category';
 
 export const items = [
   {
-    title: 'Overview',
+    title: 'Home',
     path: '/',
     icon: (
       <SvgIcon fontSize="small">
@@ -19,11 +19,11 @@ export const items = [
     )
   },
   {
-    title: 'Customers',
+    title: 'Categorias',
     path: '/customers',
     icon: (
       <SvgIcon fontSize="small">
-        <UsersIcon />
+        <CategoryIcon />
       </SvgIcon>
     )
   },
