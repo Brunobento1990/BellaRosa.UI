@@ -10,12 +10,30 @@ import { OverviewTasksProgress } from 'src/sections/overview/overview-tasks-prog
 import { OverviewTotalCustomers } from 'src/sections/overview/overview-total-customers';
 import { OverviewTotalProfit } from 'src/sections/overview/overview-total-profit';
 import { OverviewTraffic } from 'src/sections/overview/overview-traffic';
+import { useApi } from 'src/hooks/use-api';
+import { useEffect, useState } from 'react';
+import { Promocoes } from 'src/sections/overview/promocoes';
 
 const now = new Date();
 
-const Page = () => (
+const Page = () => {
 
-  <>
+  const api = useApi();
+  const [produtosEmDestaque, setProdutosEmDestaque] = useState([]);
+  const [promocoesViewDto, setPromocoesViewDto] = useState([]);
+
+  useEffect(() => {
+    const init = async () => {
+      const response = await api.get("home")
+      setProdutosEmDestaque(response.produtosEmDestaque)
+      setPromocoesViewDto(response.promocoesViewDto)
+    }
+
+    init();
+  },[])
+
+  return (
+    <>
     <Head>
       <title>
         Overview | Devias Kit
@@ -29,7 +47,10 @@ const Page = () => (
       }}
     >
       <Container maxWidth="xl">
-        <Grid
+        <Promocoes
+          promocoesView={promocoesViewDto}
+        />
+        {/* <Grid
           container
           spacing={3}
         >
@@ -218,11 +239,12 @@ const Page = () => (
               sx={{ height: '100%' }}
             />
           </Grid>
-        </Grid>
+        </Grid> */}
       </Container>
     </Box>
   </>
-);
+  )
+};
 
 Page.getLayout = (page) => (
   <DashboardLayout>

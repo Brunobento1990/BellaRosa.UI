@@ -127,13 +127,13 @@ export const OverviewSales = (props) => {
         title="Sales"
       />
       <CardContent>
-        <Chart
+        {/* <Chart
           height={350}
           options={chartOptions}
           series={chartSeries}
           type="bar"
           width="100%"
-        />
+        /> */}
       </CardContent>
       <Divider />
       <CardActions sx={{ justifyContent: 'flex-end' }}>
