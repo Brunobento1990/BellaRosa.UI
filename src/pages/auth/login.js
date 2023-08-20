@@ -164,7 +164,6 @@ const Page = () => {
                 size="large"
                 sx={{ mt: 3 }}
                 onClick={handleSkip}
-
               >
                 Esqueceu sua senha?
               </Button>

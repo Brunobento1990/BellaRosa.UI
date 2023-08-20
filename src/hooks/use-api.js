@@ -4,8 +4,8 @@ import { useRouter } from 'next/navigation';
 import { useAuthApp } from "src/guards/auth-app";
 
 function getSocket() {
-    //const baseUrl = "https://localhost:44345/api/"
-    const baseUrl = "https://api-server.shop/api/"
+    const baseUrl = "https://localhost:7082/api/"
+    //const baseUrl = "https://api-server.shop/api/"
     const localAuth = localStorage.getItem('token');
     const auth = localAuth ? localAuth : '';
 
@@ -84,10 +84,37 @@ export function useApi() {
 
         } catch (error) {
             if (error.response) {
-                //Modal.show(error.response.data)
                 alert(error.response)
             } else {
-                //Modal.show("Ocorreu um erro interno, tente novamente mais tarde.")
+                alert("Ocorreu um erro interno, tente novamente mais tarde.")
+            }
+        } finally {
+            loader.hide();
+        }
+    }
+
+    async function put(url, payload){
+        try {
+
+            if (!authApp.authorize()) {
+                router
+                    .replace({
+                        pathname: '/auth/login',
+                        query: router.asPath !== '/' ? { continueUrl: router.asPath } : undefined
+                    })
+                    .catch(console.error);
+            }
+
+            loader.show();
+
+            const api = getSocket();
+            const response = (await api.put(url, payload)).data;
+            return response;
+
+        } catch (error) {
+            if (error.response.data) {
+                alert(error.response.data)
+            } else {
                 alert("Ocorreu um erro interno, tente novamente mais tarde.")
             }
         } finally {
@@ -98,7 +125,8 @@ export function useApi() {
     return {
         login,
         createUser,
-        get
+        get,
+        put
     }
 
 }
