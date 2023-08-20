@@ -28,9 +28,14 @@ export const TopNav = (props) => {
   const { onNavOpen } = props;
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
   const accountPopover = usePopover();
+  const [imagemModel, setImagemModel] = useState(undefined);
 
   useEffect(() => {
-    setUser(authApp.getSessionInfo())
+    var userSession = authApp.getSessionInfo(); 
+    if (userSession?.tipoImagem && userSession?.avatar) {
+      setImagemModel(`data:image/${userSession.tipoImagem};base64,${userSession.avatar}`)
+    }
+    setUser()
   },[])
 
   return (
@@ -108,7 +113,7 @@ export const TopNav = (props) => {
                 height: 40,
                 width: 40
               }}
-              src={user?.foto}
+              src={imagemModel}
             />
           </Stack>
         </Stack>

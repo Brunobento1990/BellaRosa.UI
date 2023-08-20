@@ -17,6 +17,7 @@ import {
     SvgIcon
 } from '@mui/material';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import { themeCores } from '../../theme/colors'
 
 export const Page = () => {
 
@@ -26,7 +27,6 @@ export const Page = () => {
     useEffect(() => {
         const init = async () => {
             const response = await api.get("lista-categorias")
-            console.log(response)
             if (response) {
                 setCategories(response)
             }
@@ -42,7 +42,9 @@ export const Page = () => {
                 margin: '20px'
             }}
         >
-            <CardHeader title="Categorias" />
+            <CardHeader title="Categorias" sx={{
+                color: themeCores.rosa
+            }} />
             <List>
                 {categories.map((categorie, index) => {
                     const hasDivider = index < categories.length - 1;
@@ -54,7 +56,6 @@ export const Page = () => {
                             <ListItemText
                                 primary={`Descrição : ${categorie.descricao}`}
                                 primaryTypographyProps={{ variant: 'subtitle1' }}
-                                secondaryTypographyProps={{ variant: 'body2' }}
                             />
                             <IconButton edge="end">
                                 <SvgIcon>
