@@ -11,7 +11,6 @@ import {
   Divider,
   CardActions,
   Button,
-  CardHeader,
   TextField
 } from '@mui/material';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
@@ -22,10 +21,12 @@ import * as Yup from 'yup';
 import { string } from 'prop-types';
 import { themeCores } from '../theme/colors'
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
+import { useRouter } from 'next/router';
 
 const Page = () => {
 
   const api = useApi();
+  const router = useRouter();
 
   const [imagemModel, setImagemModel] = useState(undefined);
 
@@ -46,12 +47,21 @@ const Page = () => {
         .email('E-mail inválido')
         .max(255)
         .required('E-mail é obrigatório'),
+        ddd:Yup
+          .string()
+          .max(3),
+        telefone: Yup
+          .string()
+          .max(20),
+        observacao: Yup
+          .string()
+          .max(255),
     }),
     onSubmit: async (values, helpers) => {
       try {
         console.log(values)
-        api.put("edit-cliente", values)
-        return;
+        await api.put("edit-cliente", values);
+        router.push("/")
       } catch (err) {
         helpers.setStatus({ success: false });
         helpers.setErrors({ submit: err.message });
@@ -127,7 +137,10 @@ const Page = () => {
         <Container maxWidth="lg">
           <Stack spacing={3}>
             <div>
-              <Typography variant="h4">
+              <Typography 
+                variant="h4"
+                color={themeCores.rosa}
+              >
                 Perfil
               </Typography>
             </div>

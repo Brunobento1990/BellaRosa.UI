@@ -1,15 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useApi } from 'src/hooks/use-api';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
-import ArrowRightIcon from '@heroicons/react/24/solid/ArrowRightIcon';
-import EllipsisVerticalIcon from '@heroicons/react/24/solid/EllipsisVerticalIcon';
+import { useRouter } from 'next/router';
 import {
-    Box,
-    Button,
     Card,
-    CardActions,
     CardHeader,
-    Divider,
     IconButton,
     List,
     ListItem,
@@ -21,6 +16,7 @@ import { themeCores } from '../../theme/colors'
 
 export const Page = () => {
 
+    const route = useRouter();
     const [categories, setCategories] = useState([])
     const api = useApi();
 
@@ -57,9 +53,11 @@ export const Page = () => {
                                 primary={`Descrição : ${categorie.descricao}`}
                                 primaryTypographyProps={{ variant: 'subtitle1' }}
                             />
-                            <IconButton edge="end">
+                            <IconButton edge="end"
+                                onClick={() => route.push(`/category/${categorie?.id}`)}
+                            >
                                 <SvgIcon>
-                                    <NavigateNextIcon />
+                                    <NavigateNextIcon/>
                                 </SvgIcon>
                             </IconButton>
                         </ListItem>
