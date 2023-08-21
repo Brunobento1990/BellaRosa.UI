@@ -5,6 +5,8 @@ import { useApi } from 'src/hooks/use-api';
 import {
     Card,
     CardHeader,
+    Stack,
+    Divider
 } from '@mui/material';
 import { themeCores } from '../../theme/colors'
 
@@ -30,10 +32,26 @@ export const Page = () => {
                 margin: '20px'
             }}
         >
-            <CardHeader title={`Categoria : ${category?.descricao}`} sx={{
+            <CardHeader title={`Categoria : ${category?.descricao ?? ""}`} sx={{
                 color: themeCores.rosa
             }} />
-            
+
+            <Divider />
+            <Stack
+                alignItems="center"
+                direction="row"
+                justifyContent="space-between"
+                spacing={2}
+                sx={{ p: 2 }}
+            >
+                <Stack
+                alignItems="center"
+                direction="row"
+                spacing={1}
+                >
+                
+                </Stack>
+            </Stack>
         </Card>
     )
 }
