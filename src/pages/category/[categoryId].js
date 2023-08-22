@@ -47,45 +47,39 @@ export const Page = () => {
                     py: 8
                 }}
             >
-                <Container maxWidth="lg">
+                <Container maxWidth="xl">
                     <Stack spacing={3}>
                         <Grid
                             container
                             spacing={3}
                         >
-                            <Grid
-                                xs={12}
-                                md={6}
-                                lg={4}
+                            <Card
+                                sx={{
+                                    width: '100%',
+                                    marginLeft: '20px'
+                                }}
                             >
-                                <Card
-                                    sx={{
-                                        width: '90%',
-                                        margin: '20px'
-                                    }}
+                                <CardHeader title={`Categoria : ${category?.descricao ?? ""}`} sx={{
+                                    color: themeCores.rosa
+                                }} />
+
+                                <Divider />
+                                <Stack
+                                    alignItems="center"
+                                    direction="row"
+                                    justifyContent="space-between"
+                                    spacing={2}
+                                    sx={{ p: 2 }}
                                 >
-                                    <CardHeader title={`Categoria : ${category?.descricao ?? ""}`} sx={{
-                                        color: themeCores.rosa
-                                    }} />
 
-                                    <Divider />
-                                    <Stack
-                                        alignItems="center"
-                                        direction="row"
-                                        justifyContent="space-between"
-                                        spacing={2}
-                                        sx={{ p: 2 }}
+                                    <Button
+                                        fullWidth
+                                        onClick={() => route.push("/category")}
                                     >
-
-                                        <Button
-                                            fullWidth
-                                            onClick={() => route.push("/category")}
-                                        >
-                                            Voltar
-                                        </Button>
-                                    </Stack>
-                                </Card>
-                            </Grid>
+                                        Voltar
+                                    </Button>
+                                </Stack>
+                            </Card>
                         </Grid>
                         {category?.produtos?.map((product, index) => (
                             <CardProduct

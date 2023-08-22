@@ -12,8 +12,7 @@ export const CardProduct = (props) => {
                 display: 'flex',
                 flexDirection: 'column',
                 height: '100%',
-                width: '92%',
-                margin: '20px'
+                width: '100%'
             }}
         >
             <CardContent>
