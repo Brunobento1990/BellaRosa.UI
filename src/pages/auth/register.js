@@ -53,7 +53,7 @@ const Page = () => {
     <>
       <Head>
         <title>
-          Register | Devias Kit
+          Bella rosa
         </title>
       </Head>
       <Box

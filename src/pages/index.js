@@ -24,9 +24,9 @@ const Page = () => {
 
   useEffect(() => {
     const init = async () => {
-      const response = await api.get("home")
-      setProdutosEmDestaque(response.produtosEmDestaque)
-      setPromocoesViewDto(response.promocoesViewDto)
+      //const response = await api.get("")
+      // setProdutosEmDestaque(response.produtosEmDestaque)
+      // setPromocoesViewDto(response.promocoesViewDto)
     }
 
     init();
@@ -36,7 +36,7 @@ const Page = () => {
     <>
     <Head>
       <title>
-        Overview | Devias Kit
+        Bella rosa
       </title>
     </Head>
     <Box

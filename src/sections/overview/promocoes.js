@@ -19,10 +19,10 @@ import { useEffect, useState } from 'react';
 
 export const Promocoes = ({ promocoesView }) => {
 
-    const [produtos, setProdutos] = useState(promocoesView);
+    const [produtos, setProdutos] = useState(promocoesView ?? []);
     
     useEffect(() => {
-        setProdutos(promocoesView)
+        setProdutos(promocoesView ?? [])
     },[promocoesView])
 
     return (

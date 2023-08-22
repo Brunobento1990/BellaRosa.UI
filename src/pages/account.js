@@ -59,7 +59,6 @@ const Page = () => {
     }),
     onSubmit: async (values, helpers) => {
       try {
-        console.log(values)
         await api.put("edit-cliente", values);
         router.push("/")
       } catch (err) {
@@ -124,7 +123,7 @@ const Page = () => {
     <>
       <Head>
         <title>
-          Account | Devias Kit
+          Bella rosa
         </title>
       </Head>
       <Box
