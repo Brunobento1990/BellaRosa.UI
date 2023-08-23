@@ -1,23 +1,24 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
-import EditIcon from '@mui/icons-material/Edit';
-import ArchiveIcon from '@mui/icons-material/Archive';
-import FileCopyIcon from '@mui/icons-material/FileCopy';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { StyledMenu } from './styles-menu'
 import Menu from '@mui/material/Menu';
 import Fade from '@mui/material/Fade';
+import { themeCores } from 'src/theme/colors';
 
-export function OrderBy(){
+export function OrderBy({title, options, handleClickParam}){
 
-    const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [titleState, setTitleState] = React.useState(title)
+
   const open = Boolean(anchorEl);
+  
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+  
+  const handleClose = (value) => {
+    setTitleState(options.filter(x => x.index == value)[0].title)
     setAnchorEl(null);
   };
 
@@ -30,8 +31,15 @@ export function OrderBy(){
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
         endIcon={<KeyboardArrowDownIcon />}
+        sx={{
+          color:themeCores.rosa,
+          border:`solid 1px ${themeCores.rosa}`,
+          minWidth:'200px',
+          display:'flex',
+          justifyContent:'space-between'
+        }}
       >
-        Dashboard
+        {titleState}
       </Button>
       <Menu
         id="fade-menu"
@@ -43,76 +51,28 @@ export function OrderBy(){
         onClose={handleClose}
         TransitionComponent={Fade}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        {options &&
+          options.map((opt, index) => (
+            <MenuItem 
+              onClick={(value) => {
+                handleClose(value.target.value)
+                if(handleClickParam){
+                  handleClickParam(value.target.value)
+                }
+              }}
+              key={index}
+              value={opt.index}
+              sx={{
+                  display:'flex',
+                  gap:'10px'
+                }}
+            >
+              {opt.icon}
+              {opt.title}
+            </MenuItem>
+          ))
+        }
       </Menu>
     </div>
   );
-    
-    //const { propsOrder } = props;
-
-    // const [anchorEl, setAnchorEl] = React.useState(null);
-    // const open = Boolean(anchorEl);
-    // const handleClick = (event) => {
-    //     setAnchorEl(event.currentTarget);
-    // };
-    // const handleClose = () => {
-    //     setAnchorEl(null);
-    // };
-
-    // return (
-    //     <div>
-    //       <Button
-    //         id="demo-customized-button"
-    //         aria-controls={open ? 'demo-customized-menu' : undefined}
-    //         aria-haspopup="true"
-    //         aria-expanded={open ? 'true' : undefined}
-    //         variant="contained"
-    //         disableElevation
-    //         onClick={handleClick}
-    //         endIcon={<KeyboardArrowDownIcon />}
-    //       >
-    //         Ordernar produtos
-    //       </Button>
-    //       <StyledMenu
-    //         id="demo-customized-menu"
-    //         MenuListProps={{
-    //           'aria-labelledby': 'demo-customized-button',
-    //         }}
-    //         anchorEl={anchorEl}
-    //         open={open}
-    //         onClose={handleClose}
-    //         onClick={(value) => console.log(value.target.value)}
-    //       >
-    //         <MenuItem 
-    //             onClick={handleClose} 
-    //             disableRipple
-    //             value={0}
-    //         >
-    //           <EditIcon />
-    //           Edit
-    //         </MenuItem>
-    //         <MenuItem 
-    //             onClick={handleClose} disableRipple
-    //             value={1}
-    //         >
-    //           <FileCopyIcon />
-    //           Duplicate
-    //         </MenuItem>
-    //         <MenuItem 
-    //             onClick={handleClose} 
-    //             disableRipple
-    //             value={2}
-    //         >
-    //           <ArchiveIcon />
-    //           Archive
-    //         </MenuItem>
-    //         <MenuItem onClick={handleClose} disableRipple>
-    //           <MoreHorizIcon />
-    //           More
-    //         </MenuItem>
-    //       </StyledMenu>
-    //     </div>
-    //   );
 }

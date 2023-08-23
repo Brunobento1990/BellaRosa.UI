@@ -14,6 +14,7 @@ import {
 import { themeCores } from '../../theme/colors'
 import { CardProduct } from 'src/sections/cards/card-product';
 import { OrderBy } from 'src/components/order-by';
+import { Options } from 'src/sections/configs/optionsOrderByCategoria';
 
 export const Page = () => {
 
@@ -22,14 +23,19 @@ export const Page = () => {
     const id = route.query.categoryId;
     const [category, setCategory] = useState({});
     const [orderBy, setOrderBy] = useState("");
-
+    
+    const init = async () => {
+        const response = await api.get(`retorna-categoria?id=${id}&orderBy=${orderBy}`)
+        setCategory(response)
+    }
+    console.log(orderBy)
     useEffect(() => {
-        const init = async () => {
-            const response = await api.get(`retorna-categoria?id=${id}&orderBy=${orderBy}`)
-            setCategory(response)
-        }
         init();
     }, [])
+
+    useEffect(() => {
+        init();
+    },[orderBy])
 
     return (
         <>
@@ -60,17 +66,23 @@ export const Page = () => {
                                     color: themeCores.rosa,
                                     textAlign:'center',
                                 }} />
+                                <OrderBy
+                                    title="Ordenar produtos"
+                                    options={Options}
+                                    handleClickParam={(value) => setOrderBy(Options.filter(x => x.index == value)[0].value)}
+                                />
                                 <Button
                                     onClick={() => route.push("/category")}
                                     sx={{
-                                        height:'50px'
+                                        height:'50px',
+                                        color: themeCores.rosa,
+                                        border:`solid 1px ${themeCores.rosa}`,
                                     }}
                                 >
                                     Voltar
                                 </Button>
                             </Box>
                         </Grid>
-                        <OrderBy/>
                         {category?.produtos?.map((product, index) => (
                             <CardProduct
                                 key={index}
