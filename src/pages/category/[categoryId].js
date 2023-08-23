@@ -6,17 +6,14 @@ import Head from 'next/head';
 import {
     CardHeader,
     Stack,
-    Divider,
     Button,
     Box,
     Container,
     Grid,
-    Card,
-    CardContent,
-    CardActions
 } from '@mui/material';
 import { themeCores } from '../../theme/colors'
 import { CardProduct } from 'src/sections/cards/card-product';
+import { OrderBy } from 'src/components/order-by';
 
 export const Page = () => {
 
@@ -24,10 +21,11 @@ export const Page = () => {
     const api = useApi();
     const id = route.query.categoryId;
     const [category, setCategory] = useState({});
+    const [orderBy, setOrderBy] = useState("");
 
     useEffect(() => {
         const init = async () => {
-            const response = await api.get(`retorna-categoria?id=${id}`)
+            const response = await api.get(`retorna-categoria?id=${id}&orderBy=${orderBy}`)
             setCategory(response)
         }
         init();
@@ -53,42 +51,32 @@ export const Page = () => {
                             container
                             spacing={3}
                         >
-                            <Card
-                                sx={{
-                                    width: '100%',
-                                    marginLeft: '20px'
-                                }}
+                            <Box
+                                display='flex'
+                                alignItems='center'
+                                gap={10}
                             >
-                                <CardHeader title={`Categoria : ${category?.descricao ?? ""}`} sx={{
-                                    color: themeCores.rosa
+                                <CardHeader title={category?.descricao ?? ""} sx={{
+                                    color: themeCores.rosa,
+                                    textAlign:'center',
                                 }} />
-
-                                <Divider />
-                                <Stack
-                                    alignItems="center"
-                                    direction="row"
-                                    justifyContent="space-between"
-                                    spacing={2}
-                                    sx={{ p: 2 }}
+                                <Button
+                                    onClick={() => route.push("/category")}
+                                    sx={{
+                                        height:'50px'
+                                    }}
                                 >
-
-                                    <Button
-                                        fullWidth
-                                        onClick={() => route.push("/category")}
-                                    >
-                                        Voltar
-                                    </Button>
-                                </Stack>
-                            </Card>
+                                    Voltar
+                                </Button>
+                            </Box>
                         </Grid>
+                        <OrderBy/>
                         {category?.produtos?.map((product, index) => (
                             <CardProduct
                                 key={index}
                                 product={product}
                             />
-                        ))
-
-                        }
+                        ))}
 
                     </Stack>
                 </Container>
