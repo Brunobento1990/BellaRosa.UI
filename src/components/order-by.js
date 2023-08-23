@@ -6,7 +6,7 @@ import Menu from '@mui/material/Menu';
 import Fade from '@mui/material/Fade';
 import { themeCores } from 'src/theme/colors';
 
-export function OrderBy({title, options, handleClickParam}){
+export function OrderBy({title, options, handleClickParam, sm}){
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [titleState, setTitleState] = React.useState(title)
@@ -18,7 +18,7 @@ export function OrderBy({title, options, handleClickParam}){
   };
   
   const handleClose = (value) => {
-    setTitleState(options.filter(x => x.index == value)[0].title)
+    setTitleState(titleState + " " + options.filter(x => x.index == value)[0].title)
     setAnchorEl(null);
   };
 
@@ -34,9 +34,11 @@ export function OrderBy({title, options, handleClickParam}){
         sx={{
           color:themeCores.rosa,
           border:`solid 1px ${themeCores.rosa}`,
-          minWidth:'200px',
+          minWidth:'300px',
+          width:"100%",
           display:'flex',
-          justifyContent:'space-between'
+          justifyContent:'space-between',
+          margin:'20px'
         }}
       >
         {titleState}

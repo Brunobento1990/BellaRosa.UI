@@ -4,6 +4,7 @@ import { styled } from '@mui/material/styles';
 import { SideNav } from './side-nav';
 import { TopNav } from './top-nav';
 import { useLoader } from '../../components/loading/index'
+import { useCartModal } from 'src/components/cart-modal';
 
 const SIDE_NAV_WIDTH = 280;
 
@@ -25,6 +26,7 @@ const LayoutContainer = styled('div')({
 
 export const Layout = (props) => {
   const Loader = useLoader();
+  const cartModal = useCartModal();
   const { children } = props;
   const pathname = usePathname();
   const [openNav, setOpenNav] = useState(false);
@@ -50,6 +52,7 @@ export const Layout = (props) => {
     <>
       <TopNav onNavOpen={() => setOpenNav(true)} />
       <Loader.Component />
+      <cartModal.Component/>
       <SideNav
         onClose={() => setOpenNav(false)}
         open={openNav}

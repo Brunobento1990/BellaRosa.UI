@@ -32,11 +32,7 @@ export function useApi() {
             authApp.setSessionInfo(response);
 
         } catch (error) {
-            if (error.response) {
-                alert(error.response.data)
-            } else {
-                alert("Ocorreu um erro interno, tente novamente mais tarde.")
-            }
+            router.push("/404")
         } finally {
             loader.hide();
         }
@@ -51,11 +47,7 @@ export function useApi() {
 
         } catch (error) {
             if (error.response) {
-                if(error.response.data.errors.RePassword[0]){
-                    alert(error.response.data.errors.RePassword[0])
-                }else{
-                    alert("Ocorreu um erro interno, tente novamente mais tarde.")
-                }
+                router.push("/404")
             } else {
                 alert("Ocorreu um erro interno, tente novamente mais tarde.")
             }
@@ -83,11 +75,7 @@ export function useApi() {
             return response;
 
         } catch (error) {
-            if (error.response) {
-                alert(error.response)
-            } else {
-                alert("Ocorreu um erro interno, tente novamente mais tarde.")
-            }
+            router.push("/404")
         } finally {
             loader.hide();
         }
@@ -112,11 +100,7 @@ export function useApi() {
             return response;
 
         } catch (error) {
-            if (error.response.data) {
-                alert(error.response.data)
-            } else {
-                alert("Ocorreu um erro interno, tente novamente mais tarde.")
-            }
+            router.push("/404")
         } finally {
             loader.hide();
         }

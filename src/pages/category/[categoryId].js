@@ -56,21 +56,21 @@ export const Page = () => {
                         <Grid
                             container
                             spacing={3}
+                            sm={12}
+                            sx={6}
+
                         >
                             <Box
                                 display='flex'
                                 alignItems='center'
                                 gap={10}
+                                
                             >
                                 <CardHeader title={category?.descricao ?? ""} sx={{
                                     color: themeCores.rosa,
                                     textAlign:'center',
                                 }} />
-                                <OrderBy
-                                    title="Ordenar produtos"
-                                    options={Options}
-                                    handleClickParam={(value) => setOrderBy(Options.filter(x => x.index == value)[0].value)}
-                                />
+                                
                                 <Button
                                     onClick={() => route.push("/category")}
                                     sx={{
@@ -82,6 +82,11 @@ export const Page = () => {
                                     Voltar
                                 </Button>
                             </Box>
+                            <OrderBy
+                                title="Ordenar por"
+                                options={Options}
+                                handleClickParam={(value) => setOrderBy(Options.filter(x => x.index == value)[0].value)}
+                            />
                         </Grid>
                         {category?.produtos?.map((product, index) => (
                             <CardProduct
@@ -89,6 +94,8 @@ export const Page = () => {
                                 product={product}
                             />
                         ))}
+
+                        
 
                     </Stack>
                 </Container>

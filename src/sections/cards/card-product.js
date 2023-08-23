@@ -2,9 +2,11 @@ import PropTypes from 'prop-types';
 import { Avatar, Box, Card, CardContent, Divider, Stack, Button, Typography } from '@mui/material';
 import { themeCores } from 'src/theme/colors';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { useCartModal } from 'src/components/cart-modal';
 
 export const CardProduct = (props) => {
 
+    const cartModal = useCartModal();
     const { product } = props;
     return (
         <Card
@@ -84,6 +86,7 @@ export const CardProduct = (props) => {
                         display:'flex',
                         gap:'30px'
                     }}
+                    onClick={() => cartModal.show()}
                 >
                     Adicionar ao carrinho
                     <AddShoppingCartIcon/>
