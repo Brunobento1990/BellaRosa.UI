@@ -47,11 +47,7 @@ export function useApi() {
             authApp.setSessionInfo(response);
 
         } catch (error) {
-            if (error.response) {
-                router.push("/404")
-            } else {
-                alert("Ocorreu um erro interno, tente novamente mais tarde.")
-            }
+            router.push("/404")
         } finally {
             loader.hide();
         }
