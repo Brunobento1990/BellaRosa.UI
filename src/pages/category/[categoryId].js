@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useApi } from 'src/hooks/use-api';
 import Head from 'next/head';
+import ArrowLeftIcon from '@heroicons/react/24/solid/ArrowLeftIcon';
 import {
     CardHeader,
     Stack,
@@ -10,6 +11,7 @@ import {
     Box,
     Container,
     Grid,
+    SvgIcon
 } from '@mui/material';
 import { themeCores } from '../../theme/colors'
 import { CardProduct } from 'src/sections/cards/card-product';
@@ -23,7 +25,7 @@ export const Page = () => {
     const id = route.query.categoryId;
     const [category, setCategory] = useState({});
     const [orderBy, setOrderBy] = useState("");
-    
+
     const init = async () => {
         const response = await api.get(`retorna-categoria?id=${id}&orderBy=${orderBy}`)
         setCategory(response)
@@ -35,7 +37,7 @@ export const Page = () => {
 
     useEffect(() => {
         init();
-    },[orderBy])
+    }, [orderBy])
 
     return (
         <>
@@ -64,23 +66,12 @@ export const Page = () => {
                                 display='flex'
                                 alignItems='center'
                                 gap={10}
-                                
+
                             >
                                 <CardHeader title={category?.descricao ?? ""} sx={{
                                     color: themeCores.rosa,
-                                    textAlign:'center',
+                                    textAlign: 'center',
                                 }} />
-                                
-                                <Button
-                                    onClick={() => route.push("/category")}
-                                    sx={{
-                                        height:'50px',
-                                        color: themeCores.rosa,
-                                        border:`solid 1px ${themeCores.rosa}`,
-                                    }}
-                                >
-                                    Voltar
-                                </Button>
                             </Box>
                             <OrderBy
                                 title="Ordenar por"
@@ -95,7 +86,23 @@ export const Page = () => {
                             />
                         ))}
 
-                        
+                        <Button
+                            onClick={() => route.push("/category")}
+                            startIcon={(
+                                <SvgIcon fontSize="small">
+                                  <ArrowLeftIcon />
+                                </SvgIcon>
+                              )}
+                            sx={{
+                                height: '50px',
+                                color: themeCores.rosa,
+                                border: `solid 1px ${themeCores.rosa}`,
+                                display:'flex',
+                                gap:'10px'
+                            }}
+                        >
+                            Voltar
+                        </Button>
 
                     </Stack>
                 </Container>

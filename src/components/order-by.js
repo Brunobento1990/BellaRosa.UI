@@ -18,7 +18,12 @@ export function OrderBy({title, options, handleClickParam, sm}){
   };
   
   const handleClose = (value) => {
-    setTitleState(titleState + " " + options.filter(x => x.index == value)[0].title)
+    if(value){
+      const titleSecondy = options.filter(x => x.index == value)[0]?.title;
+      if(titleSecondy){
+        setTitleState("Ordernar por " + titleSecondy)
+      }
+    }
     setAnchorEl(null);
   };
 

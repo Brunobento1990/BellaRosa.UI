@@ -23,19 +23,22 @@ export const CardProduct = (props) => {
                     alignItems='center'
                     justifyContent='center'
                     flexDirection='row'
+                    height='100px'
+                    gap={5}
                 >
                     <Box
                         width='40%'
                         sx={{
                             display: 'flex',
                             justifyContent: 'center',
-                            pb: 3
                         }}
                     >
                         <Avatar
                             src={`data:image/jpeg;base64,${product?.foto}`}
                             variant="square"
                             sx={{
+                                maxWidth:'100px',
+                                maxHeight:'100px',
                                 width:'200px',
                                 height:'200px',
                                 borderRadius:'10px'
@@ -49,15 +52,17 @@ export const CardProduct = (props) => {
                         justifyContent='start'
                     >
                         <Typography
-                            align="center"
+                            align="start"
                             gutterBottom
                             variant="h5"
+                            fontSize={20}
                         >
                             {product?.descricao}
                         </Typography>
                         <Typography
-                            align="center"
+                            align="start"
                             variant="body1"
+                            fontSize={14}
                         >
                             {product.precoPromocao ?
                                 <div>
@@ -69,14 +74,16 @@ export const CardProduct = (props) => {
                             }
                         </Typography>
                         <Typography
-                            align="center"
+                            align="start"
                             variant="body1"
+                            fontSize={14}
                         >
                             {product?.cor && <>{`Cor : ${product.cor}`}</>}
                         </Typography>
                         <Typography
-                            align="center"
+                            align="start"
                             variant="body1"
+                            fontSize={14}
                         >
                             {product?.tamanho && <>{`Tamanho : ${product.tamanho}`}</>}
                         </Typography>
@@ -102,7 +109,7 @@ export const CardProduct = (props) => {
                         display:'flex',
                         gap:'30px'
                     }}
-                    onClick={() => cartModal.show()}
+                    onClick={() => cartModal.show(product)}
                 >
                     Adicionar ao carrinho
                     <AddShoppingCartIcon/>
