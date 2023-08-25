@@ -19,54 +19,68 @@ export const CardProduct = (props) => {
         >
             <CardContent>
                 <Box
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        pb: 3
-                    }}
+                    display='flex'
+                    alignItems='center'
+                    justifyContent='center'
+                    flexDirection='row'
                 >
-                    <Avatar
-                        src={`data:image/jpeg;base64,${product?.foto}`}
-                        variant="square"
+                    <Box
                         sx={{
-                            width:'200px',
-                            height:'200px',
-                            borderRadius:'10px'
+                            display: 'flex',
+                            justifyContent: 'center',
+                            pb: 3
                         }}
-                    />
+                    >
+                        <Avatar
+                            src={`data:image/jpeg;base64,${product?.foto}`}
+                            variant="square"
+                            sx={{
+                                width:'200px',
+                                height:'200px',
+                                borderRadius:'10px'
+                            }}
+                        />
+                    </Box>
+                    <Box
+                        display='flex'
+                        flexDirection='column'
+                        justifyContent='start'
+                    >
+                        <Typography
+                            align="center"
+                            gutterBottom
+                            variant="h5"
+                        >
+                            {product?.descricao}
+                        </Typography>
+                        <Typography
+                            align="center"
+                            variant="body1"
+                        >
+                            {product.precoPromocao ?
+                                <div>
+                                    <p>
+                                        De {`R$ ${product?.preco.toString().replace(".",",")}`} por {`R$ ${product?.precoPromocao.toString().replace(".",",")}`}
+                                    </p>
+                                </div> :
+                                <>{`R$ ${product?.preco.toString().replace(".",",")}`}</>
+                            }
+                        </Typography>
+                        <Typography
+                            align="center"
+                            variant="body1"
+                        >
+                            {product?.cor && <>{`Cor : ${product.cor}`}</>}
+                        </Typography>
+                        <Typography
+                            align="center"
+                            variant="body1"
+                        >
+                            {product?.tamanho && <>{`Tamanho : ${product.tamanho}`}</>}
+                        </Typography>
+
+                    </Box>
                 </Box>
-                <Typography
-                    align="center"
-                    gutterBottom
-                    variant="h5"
-                >
-                    {product?.descricao}
-                </Typography>
-                <Typography
-                    align="center"
-                    variant="body1"
-                >
-                    {product.precoPromocao ?
-                        <div>
-                            <p>
-                                De {`R$ ${product?.preco.toString().replace(".",",")}`} por {`R$ ${product?.precoPromocao.toString().replace(".",",")}`}
-                            </p>
-                        </div> :
-                        <>{`R$ ${product?.preco.toString().replace(".",",")}`}</>
-                    }
-                </Typography>
-                <Typography
-                    align="center"
-                    variant="body1"
-                >
-                    {product?.cor && <>{`Cor : ${product.cor}`}</>}
-                </Typography>
-                <Typography
-                    align="center"
-                    variant="body1"
-                >
-                    {product?.tamanho && <>{`Tamanho : ${product.tamanho}`}</>}
-                </Typography>
             </CardContent>
             <Box sx={{ flexGrow: 1 }} />
             <Divider />

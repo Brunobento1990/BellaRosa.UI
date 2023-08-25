@@ -22,7 +22,6 @@ function CartModal() {
     console.log(isOpen)
     setOpen(isOpen);
   };
-  console.log("teste : ", open)
   if (!open) return null;
 
   return (
