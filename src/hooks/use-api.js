@@ -12,7 +12,8 @@ function getSocket() {
     return axios.create({
         baseURL: baseUrl,
         headers: {
-            Authorization: `Bearer ${auth}`
+            Authorization: `Bearer ${auth}`,
+            apiKey: "236d98fc-45be-4282-8b6f-ff906e17e68c"
         }
     })
 }
