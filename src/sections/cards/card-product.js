@@ -25,6 +25,7 @@ export const CardProduct = (props) => {
                     flexDirection='row'
                 >
                     <Box
+                        width='40%'
                         sx={{
                             display: 'flex',
                             justifyContent: 'center',
@@ -42,6 +43,7 @@ export const CardProduct = (props) => {
                         />
                     </Box>
                     <Box
+                        width='60%'
                         display='flex'
                         flexDirection='column'
                         justifyContent='start'
