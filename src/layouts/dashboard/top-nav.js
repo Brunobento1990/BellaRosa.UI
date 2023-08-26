@@ -18,6 +18,7 @@ import { AccountPopover } from './account-popover';
 import { useAuthApp } from 'src/guards/auth-app';
 import { useEffect, useState } from 'react';
 import { useContext } from 'src/hooks/use-context';
+import { useRouter } from 'next/router';
 
 const SIDE_NAV_WIDTH = 280;
 const TOP_NAV_HEIGHT = 64;
@@ -34,6 +35,7 @@ export const TopNav = (props) => {
   const [imagemModel, setImagemModel] = useState(undefined);
   const [quantidadeCart, setQuantidadeCart] = useState(0);
   const context = useContext();
+  const route = useRouter();
 
   updateCart = (quantidade) => {
     if(quantidade && quantidade > 0){
@@ -110,6 +112,7 @@ export const TopNav = (props) => {
                 <Badge
                   badgeContent={quantidadeCart}
                   color="secondary"
+                  onClick={() => route.push("/carrinho")}
                 >
                   <SvgIcon 
                     fontSize="small"
