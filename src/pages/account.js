@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import {
   Box,
   Container,
@@ -121,11 +120,6 @@ const Page = () => {
 
   return (
     <>
-      <Head>
-        <title>
-          Bella rosa
-        </title>
-      </Head>
       <Box
         component="main"
         sx={{

@@ -1,12 +1,11 @@
 import ChartBarIcon from '@heroicons/react/24/solid/ChartBarIcon';
-import CogIcon from '@heroicons/react/24/solid/CogIcon';
-import LockClosedIcon from '@heroicons/react/24/solid/LockClosedIcon';
+import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import ShoppingBagIcon from '@heroicons/react/24/solid/ShoppingBagIcon';
 import UserIcon from '@heroicons/react/24/solid/UserIcon';
-import UserPlusIcon from '@heroicons/react/24/solid/UserPlusIcon';
-import XCircleIcon from '@heroicons/react/24/solid/XCircleIcon';
 import { SvgIcon } from '@mui/material';
 import CategoryIcon from '@mui/icons-material/Category';
+import AddLocationIcon from '@mui/icons-material/AddLocation';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 export const items = [
   {
@@ -28,8 +27,8 @@ export const items = [
     )
   },
   {
-    title: 'Companies',
-    path: '/companies',
+    title: 'Produtos',
+    path: '/products',
     icon: (
       <SvgIcon fontSize="small">
         <ShoppingBagIcon />
@@ -46,38 +45,31 @@ export const items = [
     )
   },
   {
-    title: 'Settings',
-    path: '/settings',
+    title: 'Seu endereço',
+    path: '/address',
     icon: (
       <SvgIcon fontSize="small">
-        <CogIcon />
+        <AddLocationIcon />
       </SvgIcon>
     )
-  },
+  }
+  ,
   {
-    title: 'Login',
-    path: '/auth/login',
+    title: 'Seus pedidos',
+    path: '/requests',
     icon: (
       <SvgIcon fontSize="small">
-        <LockClosedIcon />
+        <ShoppingBasketIcon />
       </SvgIcon>
     )
-  },
+  }
+  ,
   {
-    title: 'Register',
-    path: '/auth/register',
+    title: 'Carrinho',
+    path: '/cart',
     icon: (
       <SvgIcon fontSize="small">
-        <UserPlusIcon />
-      </SvgIcon>
-    )
-  },
-  {
-    title: 'Error',
-    path: '/404',
-    icon: (
-      <SvgIcon fontSize="small">
-        <XCircleIcon />
+        <ShoppingCartIcon />
       </SvgIcon>
     )
   }

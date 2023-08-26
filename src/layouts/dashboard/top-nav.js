@@ -108,11 +108,12 @@ export const TopNav = (props) => {
             spacing={2}
           >
             <Tooltip title="Carrinho">
-              <IconButton>
+              <IconButton
+                onClick={() => route.push("/cart")}
+              >
                 <Badge
                   badgeContent={quantidadeCart}
                   color="secondary"
-                  onClick={() => route.push("/carrinho")}
                 >
                   <SvgIcon 
                     fontSize="small"
