@@ -30,7 +30,6 @@ export const Page = () => {
         const response = await api.get(`retorna-categoria?id=${id}&orderBy=${orderBy}`)
         setCategory(response)
     }
-    console.log(orderBy)
     useEffect(() => {
         init();
     }, [])
@@ -79,26 +78,24 @@ export const Page = () => {
                                 handleClickParam={(value) => setOrderBy(Options.filter(x => x.index == value)[0].value)}
                             />
                         </Grid>
-                        {category?.produtos?.map((product, index) => (
-                            <CardProduct
-                                key={index}
-                                product={product}
-                            />
-                        ))}
+                        <CardProduct
+                            productsParam={category?.produtos}
+                        />
 
                         <Button
                             onClick={() => route.push("/category")}
                             startIcon={(
                                 <SvgIcon fontSize="small">
-                                  <ArrowLeftIcon />
+                                    <ArrowLeftIcon />
                                 </SvgIcon>
-                              )}
+                            )}
                             sx={{
+                                maxWidth:'200px',
                                 height: '50px',
                                 color: themeCores.rosa,
                                 border: `solid 1px ${themeCores.rosa}`,
-                                display:'flex',
-                                gap:'10px'
+                                display: 'flex',
+                                gap: '10px'
                             }}
                         >
                             Voltar

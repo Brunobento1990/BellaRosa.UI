@@ -9,6 +9,7 @@ import { themeCores } from 'src/theme/colors';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { Avatar, Box, Card, CardContent, Divider, Stack, Button, Typography } from '@mui/material';
 import RemoveIcon from '@mui/icons-material/Remove';
+import { useContext } from 'src/hooks/use-context';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -18,15 +19,29 @@ let loaderHandler = (isOpen, productParam) => { };
 
 function CartModal() {
 
+  const context = useContext();
   const [open, setOpen] = useState(false);
   const [product, setProduct] = useState({});
   const [quantidade, setQuantidade] = useState(0);
 
   loaderHandler = (isOpen, productParam) => {
-    setProduct(productParam)
+    setProduct(productParam);
     setOpen(isOpen);
   };
-  if (!open) return null;
+
+  function handleClose(){
+    setQuantidade(0)
+    loaderHandler(false)
+  }
+
+  function handleAddCart(){
+    context.setCart(product?.id, quantidade)
+    handleClose()
+  }
+
+  if (!open) {
+    return null;
+  };
 
   return (
     <div>
@@ -34,144 +49,146 @@ function CartModal() {
         open={open}
         keepMounted
         TransitionComponent={Transition}
-        onClose={() => loaderHandler(false)}
+        onClose={() => handleClose()}
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogTitle>{product?.descricao}</DialogTitle>
         <DialogContent>
-          <Card
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              height: '100%',
-              width: '100%'
-            }}
+          <Box
+            display='flex'
+            alignItems='center'
+            justifyContent='center'
+            flexDirection='row'
+            height='100px'
+            width={500}
+            maxWidth='90%'
+            gap={5}
           >
-            <CardContent>
-              <Box
-                display='flex'
-                alignItems='center'
-                justifyContent='center'
-                flexDirection='row'
-                height='100px'
-                gap={5}
-              >
-                <Box
-                  width='40%'
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <Avatar
-                    src={`data:image/jpeg;base64,${product?.foto}`}
-                    variant="square"
-                    sx={{
-                      maxWidth: '100px',
-                      maxHeight: '100px',
-                      width: '200px',
-                      height: '200px',
-                      borderRadius: '10px'
-                    }}
-                  />
-                </Box>
-                <Box
-                  width='60%'
-                  display='flex'
-                  flexDirection='column'
-                  justifyContent='start'
-                >
-                  <Typography
-                    align="start"
-                    gutterBottom
-                    variant="h5"
-                    fontSize={20}
-                  >
-                    {product?.descricao}
-                  </Typography>
-                  <Typography
-                    align="start"
-                    variant="body1"
-                    fontSize={14}
-                  >
-                    {product.precoPromocao ?
-                      <div>
-                        <p>
-                          De {`R$ ${product?.preco.toString().replace(".", ",")}`} por {`R$ ${product?.precoPromocao.toString().replace(".", ",")}`}
-                        </p>
-                      </div> :
-                      <>{`R$ ${product?.preco.toString().replace(".", ",")}`}</>
-                    }
-                  </Typography>
-                  <Typography
-                    align="start"
-                    variant="body1"
-                    fontSize={14}
-                  >
-                    {product?.cor && <>{`Cor : ${product.cor}`}</>}
-                  </Typography>
-                  <Typography
-                    align="start"
-                    variant="body1"
-                    fontSize={14}
-                  >
-                    {product?.tamanho && <>{`Tamanho : ${product.tamanho}`}</>}
-                  </Typography>
-
-                </Box>
-              </Box>
-            </CardContent>
-            <Box sx={{ flexGrow: 1 }} />
-            <Divider />
-            <Stack
-              alignItems="center"
-              direction="row"
+            <Box
+              width='40%'
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+              }}
             >
-              <Button
-                size="large"
-                variant="contained"
-                style={{ backgroundColor: themeCores.rosa }}
+              <Avatar
+                src={`data:image/jpeg;base64,${product?.foto}`}
+                variant="square"
                 sx={{
-                  display: 'flex',
-                  gap: '30px'
+                  maxWidth: '100px',
+                  maxHeight: '100px',
+                  width: '200px',
+                  height: '200px',
+                  borderRadius: '10px',
                 }}
-                onClick={() => {
-                  if(quantidade > 0){
-                    setQuantidade(quantidade - 1)
-                  }
-                }}
+              />
+            </Box>
+            <Box
+              width='60%'
+              display='flex'
+              flexDirection='column'
+              justifyContent='start'
+            >
+              <Typography
+                align="start"
+                variant="body1"
+                fontSize={14}
               >
-                <RemoveIcon/>
-              </Button>
-              <Button
-                size="large"
-                variant="contained"
-                style={{ backgroundColor: themeCores.rosa }}
-                sx={{
-                  display: 'flex',
-                  gap: '30px'
-                }}
+                {product.precoPromocao ?
+                  <div>
+                    <p>
+                      De {`R$ ${product?.preco.toString().replace(".", ",")}`} por {`R$ ${product?.precoPromocao.toString().replace(".", ",")}`}
+                    </p>
+                  </div> :
+                  <>{`R$ ${product?.preco.toString().replace(".", ",")}`}</>
+                }
+              </Typography>
+              <Typography
+                align="start"
+                variant="body1"
+                fontSize={14}
               >
-                {quantidade}
-              </Button>
-              <Button
-                size="large"
-                variant="contained"
-                style={{ backgroundColor: themeCores.rosa }}
-                sx={{
-                  display: 'flex',
-                  gap: '30px'
-                }}
-                onClick={() => setQuantidade(quantidade + 1)}
+                {product?.cor && <>{`Cor : ${product.cor}`}</>}
+              </Typography>
+              <Typography
+                align="start"
+                variant="body1"
+                fontSize={14}
               >
-                <AddCircleIcon/>
-              </Button>
-            </Stack>
-          </Card>
+                {product?.tamanho && <>{`Tamanho : ${product.tamanho}`}</>}
+              </Typography>
+
+            </Box>
+          </Box>
+          <Stack
+            alignItems="center"
+            direction="row"
+            justifyContent='end'
+            padding={2}
+          >
+            <Button
+              size="large"
+              variant="contained"
+              style={{ backgroundColor: themeCores.rosa }}
+              sx={{
+                display: 'flex',
+                gap: '30px',
+                borderRadius: 0,
+                height: '35px',
+                borderRadius: '5px 0 0 5px',
+              }}
+              onClick={() => {
+                if (quantidade > 0) {
+                  setQuantidade(quantidade - 1)
+                }
+              }}
+            >
+              <RemoveIcon />
+            </Button>
+            <Button
+              size="large"
+              variant="contained"
+              style={{ backgroundColor: themeCores.rosa }}
+              sx={{
+                display: 'flex',
+                gap: '30px',
+                borderRadius: 0,
+                height: '35px',
+              }}
+            >
+              {quantidade}
+            </Button>
+            <Button
+              size="large"
+              variant="contained"
+              style={{ backgroundColor: themeCores.rosa }}
+              sx={{
+                display: 'flex',
+                gap: '30px',
+                borderRadius: '0 5px 5px 0',
+                height: '35px',
+              }}
+              onClick={() => setQuantidade(quantidade + 1)}
+            >
+              <AddCircleIcon />
+            </Button>
+          </Stack>
+          <Divider />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => loaderHandler(false)}>Disagree</Button>
-          <Button >Agree</Button>
+          <Button
+            onClick={() => handleClose()}
+            sx={{ color: themeCores.rosa }}
+          >
+            Voltar
+          </Button>
+          <Button
+            style={{ backgroundColor: themeCores.rosa }}
+            sx={{ color: 'white' }}
+            onClick={handleAddCart}
+          >
+            Adicionar
+          </Button>
         </DialogActions>
       </Dialog>
     </div>

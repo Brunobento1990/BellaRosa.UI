@@ -17,9 +17,12 @@ import { usePopover } from 'src/hooks/use-popover';
 import { AccountPopover } from './account-popover';
 import { useAuthApp } from 'src/guards/auth-app';
 import { useEffect, useState } from 'react';
+import { useContext } from 'src/hooks/use-context';
 
 const SIDE_NAV_WIDTH = 280;
 const TOP_NAV_HEIGHT = 64;
+
+export let updateCart = (quantidade) => {}
 
 export const TopNav = (props) => {
 
@@ -29,12 +32,23 @@ export const TopNav = (props) => {
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
   const accountPopover = usePopover();
   const [imagemModel, setImagemModel] = useState(undefined);
+  const [quantidadeCart, setQuantidadeCart] = useState(0);
+  const context = useContext();
+
+  updateCart = (quantidade) => {
+    if(quantidade && quantidade > 0){
+      setQuantidadeCart(quantidade)
+    }
+  }
 
   useEffect(() => {
     var userSession = authApp.getSessionInfo(); 
     if (userSession?.tipoImagem && userSession?.avatar) {
       setImagemModel(`data:image/${userSession.tipoImagem};base64,${userSession.avatar}`)
     }
+
+    setQuantidadeCart(context.getLengthCart())
+
     setUser()
   },[])
 
@@ -94,7 +108,7 @@ export const TopNav = (props) => {
             <Tooltip title="Carrinho">
               <IconButton>
                 <Badge
-                  badgeContent={1}
+                  badgeContent={quantidadeCart}
                   color="secondary"
                 >
                   <SvgIcon 

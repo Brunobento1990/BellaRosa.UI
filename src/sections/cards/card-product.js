@@ -1,121 +1,47 @@
 import PropTypes from 'prop-types';
-import { Avatar, Box, Card, CardContent, Divider, Stack, Button, Typography } from '@mui/material';
-import { themeCores } from 'src/theme/colors';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { useCartModal } from 'src/components/cart-modal';
+import { useMediaQuery } from '@mui/material';
+import { CardProductDesktop } from 'src/components/card-product-desktop';
+import { CardProductMobile } from 'src/components/card-product-mobile';
+import { Grid } from '@mui/material';
 
-export const CardProduct = (props) => {
+export const CardProduct = ({ productsParam }) => {
 
-    const cartModal = useCartModal();
-    const { product } = props;
+    const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
+    const products = productsParam;
+
     return (
-        <Card
-            sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                height: '100%',
-                width: '100%'
-            }}
-        >
-            <CardContent>
-                <Box
-                    display='flex'
-                    alignItems='center'
-                    justifyContent='center'
-                    flexDirection='row'
-                    height='100px'
-                    gap={5}
-                >
-                    <Box
-                        width='40%'
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                        }}
-                    >
-                        <Avatar
-                            src={`data:image/jpeg;base64,${product?.foto}`}
-                            variant="square"
-                            sx={{
-                                maxWidth:'100px',
-                                maxHeight:'100px',
-                                width:'200px',
-                                height:'200px',
-                                borderRadius:'10px'
-                            }}
-                        />
-                    </Box>
-                    <Box
-                        width='60%'
-                        display='flex'
-                        flexDirection='column'
-                        justifyContent='start'
-                    >
-                        <Typography
-                            align="start"
-                            gutterBottom
-                            variant="h5"
-                            fontSize={20}
-                        >
-                            {product?.descricao}
-                        </Typography>
-                        <Typography
-                            align="start"
-                            variant="body1"
-                            fontSize={14}
-                        >
-                            {product.precoPromocao ?
-                                <div>
-                                    <p>
-                                        De {`R$ ${product?.preco.toString().replace(".",",")}`} por {`R$ ${product?.precoPromocao.toString().replace(".",",")}`}
-                                    </p>
-                                </div> :
-                                <>{`R$ ${product?.preco.toString().replace(".",",")}`}</>
-                            }
-                        </Typography>
-                        <Typography
-                            align="start"
-                            variant="body1"
-                            fontSize={14}
-                        >
-                            {product?.cor && <>{`Cor : ${product.cor}`}</>}
-                        </Typography>
-                        <Typography
-                            align="start"
-                            variant="body1"
-                            fontSize={14}
-                        >
-                            {product?.tamanho && <>{`Tamanho : ${product.tamanho}`}</>}
-                        </Typography>
+        <>
+            {lgUp && products ?
 
-                    </Box>
-                </Box>
-            </CardContent>
-            <Box sx={{ flexGrow: 1 }} />
-            <Divider />
-            <Stack
-                alignItems="center"
-                direction="row"
-                justifyContent="space-between"
-                spacing={2}
-                sx={{ p: 2 }}
-            >
-                <Button
-                    fullWidth
-                    size="large"
-                    variant="contained"
-                    style={{ backgroundColor: themeCores.rosa }}
-                    sx={{
-                        display:'flex',
-                        gap:'30px'
-                    }}
-                    onClick={() => cartModal.show(product)}
+                <Grid
+                    container
+                    spacing={1}
                 >
-                    Adicionar ao carrinho
-                    <AddShoppingCartIcon/>
-                </Button>
-            </Stack>
-        </Card>
+                    {products?.map((product, index) => (
+                        <Grid
+                            xs={12}
+                            lg={6}
+                            key={index}
+                            marginBottom={5}
+                        >
+                            <CardProductDesktop
+                                key={index}
+                                product={product}
+                            />
+                        </Grid>
+                    ))
+
+                    }
+                </Grid>
+                :
+                products?.map((product, index) => (
+                    <CardProductMobile
+                        key={index}
+                        product={product}
+                    />
+                ))
+            }
+        </>
     )
 }
 
