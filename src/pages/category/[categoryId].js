@@ -16,7 +16,7 @@ import {
 import { themeCores } from '../../theme/colors'
 import { CardProduct } from 'src/sections/cards/card-product';
 import { OrderBy } from 'src/components/order-by';
-import { Options } from 'src/sections/configs/optionsOrderByCategoria';
+import { Options } from 'src/sections/configs/optionsOrderBycategoria';
 
 export const Page = () => {
 
