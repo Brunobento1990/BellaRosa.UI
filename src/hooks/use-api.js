@@ -33,7 +33,7 @@ export function useApi() {
             authApp.setSessionInfo(response);
 
         } catch (error) {
-            router.push("/404")
+            alert("E-mail ou senha inválidos!")
         } finally {
             loader.hide();
         }
