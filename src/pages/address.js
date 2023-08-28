@@ -16,39 +16,42 @@ import { useFormik } from 'formik';
 import { useApi } from 'src/hooks/use-api';
 import * as Yup from 'yup';
 import { themeCores } from '../theme/colors'
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { MasKCep } from 'src/utils/maskCep';
+import { useRouter } from 'next/router';
 
 const maxCaracter = 'Número máximo de caracteres';
 
 const validation = Yup.object({
     cep: Yup
         .string()
-        .max(10,maxCaracter)
+        .max(10, maxCaracter)
         .required('CEP é obrigatório'),
     logradouro: Yup
         .string()
-        .max(255,maxCaracter)
+        .max(255, maxCaracter)
         .required('Informe a rua'),
     complemento: Yup
         .string()
-        .max(255,maxCaracter),
+        .max(255, maxCaracter),
     bairro: Yup
         .string()
-        .max(50,maxCaracter)
+        .max(50, maxCaracter)
         .required('Informe o bairro'),
     cidade: Yup
         .string()
-        .max(50,maxCaracter)
+        .max(50, maxCaracter)
         .required('Informe a cidade'),
     estado: Yup
         .string()
-        .max(50,maxCaracter)
+        .max(50, maxCaracter)
         .required('Informe o estado'),
 })
 
 export const Page = () => {
 
     const api = useApi();
+    const route = useRouter();
 
     const formik = useFormik({
         initialValues: {
@@ -64,6 +67,7 @@ export const Page = () => {
         onSubmit: async (values, helpers) => {
             try {
                 api.put("editar-endereco", values)
+                route.push("/")
             } catch (err) {
                 helpers.setStatus({ success: false });
                 helpers.setErrors({ submit: err.message });
@@ -76,11 +80,31 @@ export const Page = () => {
         const init = async () => {
             const response = await api.get('retorna-endereco');
             formik.setValues({
-                ...response
+                ...response,
             })
         };
         init();
     }, [])
+
+    useEffect(() => {
+        const handleCep = async () => {
+
+            if (formik?.values?.cep && formik?.values?.cep.length === 9) {
+                const response = await api.getCep(formik?.values?.cep.replace('-', ''));
+                formik.setValues({
+                    cidade: response.cidade,
+                    bairro: response.bairro,
+                    estado: response.uf,
+                    id: formik?.values?.id,
+                    cep: formik?.values?.cep,
+                    logradouro: response.logradouro,
+                    complemento: response.complemento,
+                })
+            }
+        }
+        handleCep();
+
+    }, [formik?.values?.cep])
 
     return (
         <Box
@@ -134,7 +158,10 @@ export const Page = () => {
                                                             onChange={formik.handleChange}
                                                             required
                                                             type='text'
-                                                            value={formik.values?.cep}
+                                                            value={MasKCep(formik.values?.cep)}
+                                                            inputProps={{
+                                                                maxLength: 9
+                                                            }}
                                                         />
                                                     </Grid>
                                                     <Grid
@@ -150,6 +177,9 @@ export const Page = () => {
                                                             type="text"
                                                             required
                                                             value={formik.values?.estado}
+                                                            inputProps={{
+                                                                maxLength: 50
+                                                            }}
                                                         />
                                                     </Grid>
                                                     <Grid
@@ -165,6 +195,9 @@ export const Page = () => {
                                                             type="text"
                                                             required
                                                             value={formik.values?.cidade}
+                                                            inputProps={{
+                                                                maxLength: 50
+                                                            }}
                                                         />
                                                     </Grid>
                                                     <Grid
@@ -180,6 +213,9 @@ export const Page = () => {
                                                             type="text"
                                                             required
                                                             value={formik.values?.bairro}
+                                                            inputProps={{
+                                                                maxLength: 50
+                                                            }}
                                                         />
                                                     </Grid>
                                                     <Grid
@@ -195,6 +231,9 @@ export const Page = () => {
                                                             required
                                                             type='text'
                                                             value={formik.values?.logradouro}
+                                                            inputProps={{
+                                                                maxLength: 255
+                                                            }}
                                                         />
                                                     </Grid>
                                                     <Grid
@@ -209,6 +248,9 @@ export const Page = () => {
                                                             onChange={formik.handleChange}
                                                             type="text"
                                                             value={formik.values?.complemento}
+                                                            inputProps={{
+                                                                maxLength: 255
+                                                            }}
                                                         />
                                                     </Grid>
                                                 </Grid>

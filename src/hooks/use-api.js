@@ -78,6 +78,24 @@ export function useApi() {
         }
     }
 
+    async function getCep(cep) {
+        try {
+
+            loader.show();
+
+            const api = axios.create({
+                baseURL: 'https://viacep.com.br/ws/'
+            });
+            const response = (await api.get(`${cep}/json/`)).data;
+            return response;
+
+        } catch (error) {
+            router.push("/404")
+        } finally {
+            loader.hide();
+        }
+    }
+
     async function put(url, payload){
         try {
 
@@ -107,7 +125,8 @@ export function useApi() {
         login,
         createUser,
         get,
-        put
+        put,
+        getCep
     }
 
 }
