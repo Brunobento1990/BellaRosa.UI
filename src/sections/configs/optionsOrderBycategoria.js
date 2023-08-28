@@ -5,26 +5,26 @@ import AspectRatioIcon from '@mui/icons-material/AspectRatio';
 
 export const Options = [
     {
-        index:0,
-        title:"Maior valor",
+        valorIndex:1,
+        title:"maior valor",
         value:"MaiorValor",
         icon:<ArrowUpwardIcon/>,
     },
     {
-        index:1,
-        title:"Menor valor",
+        valorIndex:2,
+        title:"menor valor",
         value:"MenorValor",
         icon:<ArrowDownwardIcon/>,
     },
     {
-        index:2,
-        title:"Cor",
+        valorIndex:3,
+        title:"cor",
         value:"Cor",
         icon:<ColorLensIcon/>,
     },
     {
-        index:3,
-        title:"Tamanho",
+        valorIndex:4,
+        title:"tamanho",
         value:"Tamanho",
         icon:<AspectRatioIcon/>,
     }

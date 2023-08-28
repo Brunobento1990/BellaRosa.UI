@@ -6,7 +6,7 @@ import Menu from '@mui/material/Menu';
 import Fade from '@mui/material/Fade';
 import { themeCores } from 'src/theme/colors';
 
-export function OrderBy({title, options, handleClickParam, sm}){
+export function OrderBy({title, options, handleClickParam}){
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [titleState, setTitleState] = React.useState(title)
@@ -19,12 +19,12 @@ export function OrderBy({title, options, handleClickParam, sm}){
   
   const handleClose = (value) => {
     if(value){
-      const titleSecondy = options.filter(x => x.index == value)[0]?.title;
+      const titleSecondy = options.filter(x => x.valorIndex == value)[0]?.title;
       if(titleSecondy){
         setTitleState("Ordernar por " + titleSecondy)
+        setAnchorEl(null);
       }
     }
-    setAnchorEl(null);
   };
 
   return (
@@ -43,7 +43,7 @@ export function OrderBy({title, options, handleClickParam, sm}){
           width:"100%",
           display:'flex',
           justifyContent:'space-between',
-          margin:'20px'
+          maxWidth:'400px',
         }}
       >
         {titleState}
@@ -68,7 +68,7 @@ export function OrderBy({title, options, handleClickParam, sm}){
                 }
               }}
               key={index}
-              value={opt.index}
+              value={opt.valorIndex}
               sx={{
                   display:'flex',
                   gap:'10px'

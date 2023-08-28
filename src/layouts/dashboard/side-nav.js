@@ -57,14 +57,6 @@ export const SideNav = (props) => {
             }}
           >
             {logo}
-            <Typography
-              variant="h5"
-              sx={{
-                color: themeCores.rosa,
-              }}
-            >
-              Bella Rosa
-            </Typography>
           </Box>
         </Box>
         <Divider sx={{ borderColor: 'neutral.700' }} />

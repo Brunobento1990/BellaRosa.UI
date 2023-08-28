@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import Bars3Icon from '@heroicons/react/24/solid/Bars3Icon';
-import MagnifyingGlassIcon from '@heroicons/react/24/solid/MagnifyingGlassIcon';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import {
   Avatar,
@@ -10,18 +9,21 @@ import {
   Stack,
   SvgIcon,
   Tooltip,
-  useMediaQuery
+  useMediaQuery,
+  Typography,
+  Paper,
 } from '@mui/material';
 import { alpha } from '@mui/material/styles';
 import { usePopover } from 'src/hooks/use-popover';
 import { AccountPopover } from './account-popover';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import { themeCores } from 'src/theme/colors';
 
 const SIDE_NAV_WIDTH = 280;
 const TOP_NAV_HEIGHT = 64;
 
-export let updateCart = (quantidade) => {}
+export let updateCart = (quantidade) => { }
 
 export const TopNav = (props) => {
 
@@ -32,7 +34,7 @@ export const TopNav = (props) => {
   const route = useRouter();
 
   updateCart = (quantidade) => {
-    if(quantidade && quantidade > 0){
+    if (quantidade && quantidade > 0) {
       setQuantidadeCart(quantidade)
     }
   }
@@ -71,19 +73,23 @@ export const TopNav = (props) => {
             spacing={2}
           >
             {!lgUp && (
-              <IconButton onClick={onNavOpen}>
+              <IconButton 
+                onClick={onNavOpen}
+                component={Paper}
+              >
                 <SvgIcon fontSize="small">
                   <Bars3Icon />
                 </SvgIcon>
               </IconButton>
             )}
-            <Tooltip title="Search">
-              <IconButton>
-                <SvgIcon fontSize="small">
-                  <MagnifyingGlassIcon />
-                </SvgIcon>
-              </IconButton>
-            </Tooltip>
+            <Typography
+              variant="h5"
+              sx={{
+                color: themeCores.rosa,
+              }}
+            >
+              Bella Rosa
+            </Typography>
           </Stack>
           <Stack
             alignItems="center"
@@ -98,7 +104,7 @@ export const TopNav = (props) => {
                   badgeContent={quantidadeCart}
                   color="secondary"
                 >
-                  <SvgIcon 
+                  <SvgIcon
                     fontSize="small"
                   >
                     <ShoppingCartIcon />

@@ -6,6 +6,7 @@ import Head from 'next/head';
 import ArrowLeftIcon from '@heroicons/react/24/solid/ArrowLeftIcon';
 import {
     CardHeader,
+    Typography,
     Stack,
     Button,
     Box,
@@ -54,30 +55,19 @@ export const Page = () => {
             >
                 <Container maxWidth="xl">
                     <Stack spacing={3}>
-                        <Grid
-                            container
-                            spacing={3}
-                            sm={12}
-                            sx={6}
-
+                        <Typography
+                            variant="h4"
+                            sx={{
+                                color: themeCores.rosa,
+                            }}
                         >
-                            <Box
-                                display='flex'
-                                alignItems='center'
-                                gap={10}
-
-                            >
-                                <CardHeader title={category?.descricao ?? ""} sx={{
-                                    color: themeCores.rosa,
-                                    textAlign: 'center',
-                                }} />
-                            </Box>
-                            <OrderBy
-                                title="Ordenar por"
-                                options={Options}
-                                handleClickParam={(value) => setOrderBy(Options.filter(x => x.index == value)[0].value)}
-                            />
-                        </Grid>
+                            {category?.descricao ?? ""}
+                        </Typography>
+                        <OrderBy
+                            title="Ordenar por"
+                            options={Options}
+                            handleClickParam={(value) => setOrderBy(Options.filter(x => x.valorIndex == value)[0].value)}
+                        />
                         <CardProduct
                             productsParam={category?.produtos}
                         />
@@ -90,7 +80,7 @@ export const Page = () => {
                                 </SvgIcon>
                             )}
                             sx={{
-                                maxWidth:'200px',
+                                maxWidth: '200px',
                                 height: '50px',
                                 color: themeCores.rosa,
                                 border: `solid 1px ${themeCores.rosa}`,

@@ -29,12 +29,12 @@ function CartModal() {
     setOpen(isOpen);
   };
 
-  function handleClose(){
+  function handleClose() {
     setQuantidade(0)
     loaderHandler(false)
   }
 
-  function handleAddCart(){
+  function handleAddCart() {
     context.setCart(product?.id, quantidade)
     handleClose()
   }
@@ -145,19 +145,24 @@ function CartModal() {
             >
               <RemoveIcon />
             </Button>
-            <Button
+            <Box
               size="large"
               variant="contained"
-              style={{ backgroundColor: themeCores.rosa }}
               sx={{
                 display: 'flex',
                 gap: '30px',
                 borderRadius: 0,
                 height: '35px',
+                width: '35px',
+                textAlign: 'center',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: themeCores.rosa,
+                border:`solid 1px ${themeCores.rosa}`
               }}
             >
-              {quantidade}
-            </Button>
+              <p>{quantidade}</p>
+            </Box>
             <Button
               size="large"
               variant="contained"
