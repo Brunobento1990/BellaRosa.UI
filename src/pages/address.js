@@ -52,13 +52,14 @@ export const Page = () => {
 
     const api = useApi();
     const route = useRouter();
+    let initial = false;
 
     const formik = useFormik({
         initialValues: {
             id: '',
             cep: '',
             logradouro: '',
-            complemento: undefined,
+            complemento: '',
             bairro: '',
             cidade: '',
             estado: '',
@@ -76,34 +77,37 @@ export const Page = () => {
         }
     });
 
-    useEffect(() => {
-        const init = async () => {
-            const response = await api.get('retorna-endereco');
+    const handleCep = async () => {
+
+        if (formik?.values?.cep && formik?.values?.cep.length === 9 && initial) {
+            const response = await api.getCep(formik?.values?.cep.replace('-', ''));
             formik.setValues({
-                ...response,
+                cidade: response.localidade,
+                bairro: response.bairro,
+                estado: response.uf,
+                id: formik?.values?.id,
+                cep: formik?.values?.cep,
+                logradouro: response.logradouro,
+                complemento: response.complemento,
             })
-        };
+        }else{
+            initial = true;
+        }
+    }
+
+    const init = async () => {
+        const response = await api.get('retorna-endereco');
+        formik.setValues({
+            ...response,
+        })
+    };
+
+    useEffect(() => {
         init();
     }, [])
 
     useEffect(() => {
-        const handleCep = async () => {
-
-            if (formik?.values?.cep && formik?.values?.cep.length === 9) {
-                const response = await api.getCep(formik?.values?.cep.replace('-', ''));
-                formik.setValues({
-                    cidade: response.cidade,
-                    bairro: response.bairro,
-                    estado: response.uf,
-                    id: formik?.values?.id,
-                    cep: formik?.values?.cep,
-                    logradouro: response.logradouro,
-                    complemento: response.complemento,
-                })
-            }
-        }
         handleCep();
-
     }, [formik?.values?.cep])
 
     return (

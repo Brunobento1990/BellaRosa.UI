@@ -16,7 +16,6 @@ import { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { useApi } from 'src/hooks/use-api';
 import * as Yup from 'yup';
-import { string } from 'prop-types';
 import { themeCores } from '../theme/colors'
 import { useRouter } from 'next/router';
 import { MaskTel } from 'src/utils/maskTel';
@@ -49,10 +48,9 @@ const Page = () => {
     initialValues: {
       nome: '',
       email: '',
-      ddd: string | null,
-      telefone: '' | null,
-      observacao: '' | null,
-      dataDeNascimento: '' | null,
+      telefone: '' ,
+      observacao: '' ,
+      dataDeNascimento: '' ,
       submit: null
     },
     validationSchema: Yup.object(validation),

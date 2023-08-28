@@ -1,7 +1,7 @@
 export function MaskTel(value){
-    if(!value) return;
+    if(!value) return '';
 
-    if(typeof value != 'string') return;
+    if(typeof value != 'string') return '';
 
     const digits = value.replace(/\D/g, '')
 
