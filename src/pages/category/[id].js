@@ -23,7 +23,7 @@ export const Page = () => {
 
     const route = useRouter();
     const api = useApi();
-    const id = route.query.categoryId;
+    const {id} = route.query;
     const [category, setCategory] = useState({});
     const [orderBy, setOrderBy] = useState("");
 
