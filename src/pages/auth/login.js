@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import Head from 'next/head';
 import NextLink from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -14,12 +14,16 @@ import {
   Typography
 } from '@mui/material';
 import { Layout as AuthLayout } from 'src/layouts/auth/layout';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useApi } from 'src/hooks/use-api';
+import { SvgIcon } from '@mui/material';
 
 const Page = () => {
 
   const api = useApi();
   const router = useRouter();
+  const [typeInput, setTypeInput] = useState('password');
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -30,7 +34,7 @@ const Page = () => {
       email: Yup
         .string()
         .email('E-mail inválido')
-        .max(255)
+        .max(255, 'Campo com o máximo de 255 caracteres')
         .required('E-mail é obrigatório'),
       password: Yup
         .string()
@@ -55,6 +59,15 @@ const Page = () => {
     },
     [router]
   );
+
+  function handleInputTypePasswor() {
+    if (typeInput === "password") {
+      setTypeInput("text")
+      return;
+    }
+
+    setTypeInput("password")
+  }
 
   return (
     <>
@@ -127,6 +140,9 @@ const Page = () => {
                   onChange={formik.handleChange}
                   type="email"
                   value={formik.values.email}
+                  inputProps={{
+                    maxLength: 255,
+                  }}
                 />
                 <TextField
                   error={!!(formik.touched.password && formik.errors.password)}
@@ -136,8 +152,36 @@ const Page = () => {
                   name="password"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  type="password"
+                  type={typeInput}
                   value={formik.values.password}
+                  inputProps={{
+                    maxLength: 20
+                  }}
+                  InputProps={{
+                    endAdornment: typeInput === "password"
+                      ?
+                      <SvgIcon fontSize="small"
+                        onClick={handleInputTypePasswor}
+                      >
+                        <VisibilityIcon
+                          sx={{
+                            cursor: 'pointer',
+                            color: 'neutral.500'
+                          }}
+                        />
+                      </SvgIcon>
+                      :
+                      <SvgIcon fontSize="small"
+                        onClick={handleInputTypePasswor}
+                      >
+                        <VisibilityOffIcon
+                          sx={{
+                            cursor: 'pointer',
+                            color: 'neutral.500'
+                          }}
+                        />
+                      </SvgIcon>,
+                  }}
                 />
               </Stack>
               {formik.errors.submit && (

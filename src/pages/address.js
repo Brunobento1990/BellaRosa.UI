@@ -18,6 +18,34 @@ import * as Yup from 'yup';
 import { themeCores } from '../theme/colors'
 import { useEffect } from 'react';
 
+const maxCaracter = 'Número máximo de caracteres';
+
+const validation = Yup.object({
+    cep: Yup
+        .string()
+        .max(10,maxCaracter)
+        .required('CEP é obrigatório'),
+    logradouro: Yup
+        .string()
+        .max(255,maxCaracter)
+        .required('Informe a rua'),
+    complemento: Yup
+        .string()
+        .max(255,maxCaracter),
+    bairro: Yup
+        .string()
+        .max(50,maxCaracter)
+        .required('Informe o bairro'),
+    cidade: Yup
+        .string()
+        .max(50,maxCaracter)
+        .required('Informe a cidade'),
+    estado: Yup
+        .string()
+        .max(50,maxCaracter)
+        .required('Informe o estado'),
+})
+
 export const Page = () => {
 
     const api = useApi();
@@ -32,31 +60,7 @@ export const Page = () => {
             cidade: '',
             estado: '',
         },
-        validationSchema: Yup.object({
-            cep: Yup
-                .string()
-                .max(9)
-                .required('CEP é obrigatório'),
-            logradouro: Yup
-                .string()
-                .max(255)
-                .required('Informe a rua'),
-            complemento: Yup
-                .string()
-                .max(255),
-            bairro: Yup
-                .string()
-                .max(50)
-                .required('Informe o bairro'),
-            cidade: Yup
-                .string()
-                .max(50)
-                .required('Informe a cidade'),
-            estado: Yup
-                .string()
-                .max(50)
-                .required('Informe o estado'),
-        }),
+        validationSchema: validation,
         onSubmit: async (values, helpers) => {
             try {
                 api.put("editar-endereco", values)

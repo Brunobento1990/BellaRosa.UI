@@ -15,9 +15,7 @@ import {
 import { alpha } from '@mui/material/styles';
 import { usePopover } from 'src/hooks/use-popover';
 import { AccountPopover } from './account-popover';
-import { useAuthApp } from 'src/guards/auth-app';
-import { useEffect, useState } from 'react';
-import { useContext } from 'src/hooks/use-context';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 
 const SIDE_NAV_WIDTH = 280;
@@ -27,14 +25,10 @@ export let updateCart = (quantidade) => {}
 
 export const TopNav = (props) => {
 
-  const authApp = useAuthApp();
-  const [user, setUser] = useState({});
   const { onNavOpen } = props;
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
   const accountPopover = usePopover();
-  const [imagemModel, setImagemModel] = useState(undefined);
   const [quantidadeCart, setQuantidadeCart] = useState(0);
-  const context = useContext();
   const route = useRouter();
 
   updateCart = (quantidade) => {
@@ -42,17 +36,6 @@ export const TopNav = (props) => {
       setQuantidadeCart(quantidade)
     }
   }
-
-  useEffect(() => {
-    var userSession = authApp.getSessionInfo(); 
-    if (userSession?.tipoImagem && userSession?.avatar) {
-      setImagemModel(`data:image/${userSession.tipoImagem};base64,${userSession.avatar}`)
-    }
-
-    setQuantidadeCart(context.getLengthCart())
-
-    setUser()
-  },[])
 
   return (
     <>
@@ -131,7 +114,6 @@ export const TopNav = (props) => {
                 height: 40,
                 width: 40
               }}
-              src={imagemModel}
             />
           </Stack>
         </Stack>
