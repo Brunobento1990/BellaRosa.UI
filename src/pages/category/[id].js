@@ -5,13 +5,11 @@ import { useApi } from 'src/hooks/use-api';
 import Head from 'next/head';
 import ArrowLeftIcon from '@heroicons/react/24/solid/ArrowLeftIcon';
 import {
-    CardHeader,
     Typography,
     Stack,
     Button,
     Box,
     Container,
-    Grid,
     SvgIcon
 } from '@mui/material';
 import { themeCores } from '../../theme/colors'

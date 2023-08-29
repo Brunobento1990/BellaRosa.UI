@@ -1,47 +1,20 @@
 import PropTypes from 'prop-types';
-import { useMediaQuery } from '@mui/material';
-import { CardProductDesktop } from 'src/components/card-product-desktop';
-import { CardProductMobile } from 'src/components/card-product-mobile';
 import { Grid } from '@mui/material';
+import ShopProductCard from 'src/components/car-product/index';
 
 export const CardProduct = ({ productsParam }) => {
 
-    const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
+    console.log(productsParam)
     const products = productsParam;
 
     return (
-        <>
-            {lgUp && products ?
-
-                <Grid
-                    container
-                    spacing={1}
-                >
-                    {products?.map((product, index) => (
-                        <Grid
-                            xs={12}
-                            lg={6}
-                            key={index}
-                            marginBottom={5}
-                        >
-                            <CardProductDesktop
-                                key={index}
-                                product={product}
-                            />
-                        </Grid>
-                    ))
-
-                    }
+        <Grid container spacing={3}>
+            {products?.map((product) => (
+                <Grid key={product.id} item xs={12} sm={6} md={3}>
+                    <ShopProductCard product={product} />
                 </Grid>
-                :
-                products?.map((product, index) => (
-                    <CardProductMobile
-                        key={index}
-                        product={product}
-                    />
-                ))
-            }
-        </>
+            ))}
+        </Grid>
     )
 }
 

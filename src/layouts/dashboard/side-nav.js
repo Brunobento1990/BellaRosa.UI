@@ -6,14 +6,12 @@ import {
   Divider,
   Drawer,
   Stack,
-  Typography,
   useMediaQuery
 } from '@mui/material';
 import { logo } from '../../../public/assets/logo';
 import { Scrollbar } from 'src/components/scrollbar';
 import { items } from './config';
 import { SideNavItem } from './side-nav-item';
-import { themeCores } from '../../theme/colors'
 
 export const SideNav = (props) => {
   const { open, onClose } = props;
