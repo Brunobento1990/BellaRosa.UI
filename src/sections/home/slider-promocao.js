@@ -30,7 +30,7 @@ export default function ({ promocoes }) {
                     width: '100%',
                     borderRadius: 2,
                 }}
-                src={promocoes[activeStep]?.imgPath}
+                src={`data:image/jpeg;base64,${promocoes[activeStep]?.foto}`}
             />
             <MobileStepper
                 variant="dots"
