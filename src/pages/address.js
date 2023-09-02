@@ -52,7 +52,6 @@ export const Page = () => {
 
     const api = useApi();
     const route = useRouter();
-    let initial = false;
 
     const formik = useFormik({
         initialValues: {
@@ -77,21 +76,24 @@ export const Page = () => {
         }
     });
 
-    const handleCep = async () => {
+    const handleCep = async (cep) => {
 
-        if (formik?.values?.cep && formik?.values?.cep.length === 9 && initial) {
-            const response = await api.getCep(formik?.values?.cep.replace('-', ''));
+        formik.setValues({
+            ...formik.values,
+            cep: cep,
+        })
+
+        if (cep && cep.length === 9) {
+            const response = await api.getCep(cep.replace('-', ''));
             formik.setValues({
                 cidade: response.localidade,
                 bairro: response.bairro,
                 estado: response.uf,
                 id: formik?.values?.id,
-                cep: formik?.values?.cep,
+                cep: cep,
                 logradouro: response.logradouro,
                 complemento: response.complemento,
             })
-        }else{
-            initial = true;
         }
     }
 
@@ -102,13 +104,7 @@ export const Page = () => {
         })
     };
 
-    useEffect(() => {
-        init();
-    }, [])
-
-    useEffect(() => {
-        handleCep();
-    }, [formik?.values?.cep])
+    useEffect(() => { init(); }, [])
 
     return (
         <Box
@@ -158,8 +154,7 @@ export const Page = () => {
                                                             fullWidth
                                                             label="CEP"
                                                             name="cep"
-                                                            onBlur={formik.handleBlur}
-                                                            onChange={formik.handleChange}
+                                                            onChange={(value) => handleCep(value.target.value)}
                                                             required
                                                             type='text'
                                                             value={MasKCep(formik.values?.cep)}

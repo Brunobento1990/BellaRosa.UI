@@ -31,6 +31,12 @@ export function useContext() {
         localStorage.setItem('cart', JSON.stringify(cart))
     }
 
+    function getCart(){
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        return cart;
+    }
+
     function getLengthCart(){
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
@@ -40,5 +46,6 @@ export function useContext() {
     return {
         setCart,
         getLengthCart,
+        getCart,
     }
 }

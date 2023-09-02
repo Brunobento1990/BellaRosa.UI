@@ -121,12 +121,38 @@ export function useApi() {
         }
     }
 
+    async function post(url, payload){
+        try {
+
+            if (!authApp.authorize()) {
+                router
+                    .replace({
+                        pathname: '/auth/login',
+                        query: router.asPath !== '/' ? { continueUrl: router.asPath } : undefined
+                    })
+                    .catch(console.error);
+            }
+
+            loader.show();
+
+            const api = getSocket();
+            const response = (await api.post(url, payload)).data;
+            return response;
+
+        } catch (error) {
+            router.push("/404")
+        } finally {
+            loader.hide();
+        }
+    }
+
     return {
         login,
         createUser,
         get,
         put,
-        getCep
+        getCep,
+        post,
     }
 
 }

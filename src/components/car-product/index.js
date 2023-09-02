@@ -4,6 +4,7 @@ import * as S from './styles'
 import { themeCores } from '../../theme/colors'
 import { useCartModal } from 'src/components/cart-modal';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import AccordionComponent from '../acordion';
 
 export default function ShopProductCard({ product }) {
 
@@ -13,7 +14,7 @@ export default function ShopProductCard({ product }) {
   return (
     <Card
       sx={{
-        maxWidth: lgUp ? '100%' : '87%'
+        maxWidth: lgUp ? '100%' : '90%'
       }}
     >
       <Box sx={{ pt: '100%', position: 'relative' }}>
@@ -46,12 +47,15 @@ export default function ShopProductCard({ product }) {
             {`Tamanho : ${product?.tamanho}`}
           </Typography>
         }
-        <Stack direction="row" alignItems="center" justifyContent="space-between">
-          {product?.cor &&
+        {product?.cor &&
+          <Stack direction="row" alignItems="center" justifyContent="space-between">
             <Typography variant="subtitle2" noWrap>
               {`Cor : ${product?.cor}`}
             </Typography>
-          }
+          </Stack>
+        }
+
+        <Stack direction="row" alignItems="center" justifyContent="space-between">
           <Typography variant="subtitle1">
             <Typography
               component="span"
@@ -67,6 +71,15 @@ export default function ShopProductCard({ product }) {
             {`R$ ${product?.preco.toString().replace(".", ",")}`}
           </Typography>
         </Stack>
+        {product?.especificacaoTecnica &&
+          <Stack direction="row" alignItems="center" justifyContent="space-between">
+            <AccordionComponent
+              title='Esp. técnica'
+              details={product?.especificacaoTecnica}
+            />
+          </Stack>
+        }
+
         <Button
           onClick={() => cartModal.show(product)}
           startIcon={(

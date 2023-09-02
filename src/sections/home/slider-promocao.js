@@ -29,6 +29,7 @@ export default function ({ promocoes }) {
                     overflow: 'hidden',
                     width: '100%',
                     borderRadius: 2,
+                    marginTop:-5
                 }}
                 src={`data:image/jpeg;base64,${promocoes[activeStep]?.foto}`}
             />

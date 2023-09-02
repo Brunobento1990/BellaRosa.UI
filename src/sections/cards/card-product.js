@@ -4,7 +4,6 @@ import ShopProductCard from 'src/components/car-product/index';
 
 export const CardProduct = ({ productsParam }) => {
 
-    console.log(productsParam)
     const products = productsParam;
 
     return (

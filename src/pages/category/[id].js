@@ -29,9 +29,6 @@ export const Page = () => {
         const response = await api.get(`retorna-categoria?id=${id}&orderBy=${orderBy}`)
         setCategory(response)
     }
-    useEffect(() => {
-        init();
-    }, [])
 
     useEffect(() => {
         init();

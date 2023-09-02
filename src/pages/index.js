@@ -3,20 +3,27 @@ import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { useApi } from 'src/hooks/use-api';
 import SliderPromocao from 'src/sections/home/slider-promocao';
 import { useEffect, useState } from 'react';
+import { ProdutosDestaque } from 'src/sections/home/produtos-destaque';
 
 const Page = () => {
 
   const api = useApi();
 
   const [banner, setBanner] = useState([]);
+  const [produtosDestaque, setProdutosDestaque] = useState([]);
+
+  const init = async () => {
+    const response = await api.get("lista-banner");
+    setBanner(response)
+  }
+
+  const produtoGet = async () => {
+    const response = await api.get("lista-produto-destaque");
+    setProdutosDestaque(response)
+  }
 
   useEffect(() => {
-    const init = async () => {
-      const response = await api.get("lista-banner");
-      setBanner(response)
-      console.log(response)
-    }
-
+    produtoGet();
     init();
   },[])
 
@@ -31,6 +38,11 @@ const Page = () => {
       <Container maxWidth="xl">
         <SliderPromocao
           promocoes={banner}
+        />
+      </Container>
+      <Container maxWidth='xl'> 
+        <ProdutosDestaque 
+          productsParam={produtosDestaque}
         />
       </Container>
     </Box>
