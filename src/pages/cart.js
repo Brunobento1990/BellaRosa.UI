@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useContext } from 'src/hooks/use-context';
 import { useApi } from 'src/hooks/use-api';
 import { themeCores } from 'src/theme/colors';
+import { AddressCart } from 'src/sections/cards/address';
 
 const Page = () => {
 
@@ -45,52 +46,9 @@ const Page = () => {
                 flexDirection={lgUp ? "row" : "column"}
                 gap={2}
             >
-                <Box
-                    component={Paper}
-                    width={lgUp ? "70%" : "100%"}
-                >
-                    <Box
-                        display="flex"
-                        flexDirection="column"
-                        gap={1}
-                        margin={2}
-                    >
-                        <Typography
-                            variant="h5"
-                            sx={{
-                                color: themeCores.rosa,
-                            }}
-                        >
-                            Seu endereço
-                        </Typography>
-                        <Text
-                            text={`CEP : ${endereco?.cep}`}
-                        />
-                        <Text
-                            text={`Estado : ${endereco?.estado}`}
-                        />
-                        <Text
-                            text={`Cidade : ${endereco?.cidade}`}
-                        />
-                        <Text
-                            text={`Bairro : ${endereco?.bairro}`}
-                        />
-                        <Text
-                            text={`Rua : ${endereco?.logradouro}`}
-                        />
-                        {endereco?.complemento &&
-                            <Text
-                                text={`Complemento : ${endereco?.complemento}`}
-                            />
-                        }
-                        <Divider />
-                        <Button
-                            sx={{ color: themeCores.rosa }}
-                        >
-                            Novo endereço
-                        </Button>
-                    </Box>
-                </Box>
+                <AddressCart 
+                    address={endereco}
+                />
                 <Box
                     component={Paper}
                     width={lgUp ? "30%" : "100%"}

@@ -4,8 +4,8 @@ import { useRouter } from 'next/navigation';
 import { useAuthApp } from "src/guards/auth-app";
 
 function getSocket() {
-    //const baseUrl = "https://localhost:44345/api/"
-    const baseUrl = "https://api-server.shop/api/"
+    const baseUrl = "https://localhost:44345/api/"
+    //const baseUrl = "https://api-server.shop/api/"
     const localAuth = localStorage.getItem('token');
     const auth = localAuth ? localAuth : '';
 
